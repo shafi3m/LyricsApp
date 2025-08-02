@@ -7,4 +7,12 @@ export const store = configureStore({
     poems: poemsReducer,
     categories: categoriesReducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: ["persist/PERSIST", "persist/REHYDRATE"],
+      },
+    }),
 });
+
+export default store;
