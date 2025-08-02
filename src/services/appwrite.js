@@ -3,14 +3,16 @@ import { Client, Databases, Account } from "appwrite";
 const client = new Client();
 
 client
-  .setEndpoint("https://fra.cloud.appwrite.io/v1") // Replace with your endpoint
-  .setProject("688b3e100020f098f155"); // Replace with your project ID
+  .setEndpoint(import.meta.env.VITE_APPWRITE_ENDPOINT)
+  .setProject(import.meta.env.VITE_APPWRITE_PROJECT_ID);
 
-export const databases = new Databases(client);
-export const account = new Account(client);
+const databases = new Databases(client);
+const account = new Account(client);
 
-export const DATABASE_ID = "688b3e5e001644ccb86c";
-export const POEMS_COLLECTION_ID = "688b3ec100188773c2d1";
-export const CATEGORIES_COLLECTION_ID = "688b45be001284146aef";
+export const DATABASE_ID = import.meta.env.VITE_DATABASE_ID;
+export const POEMS_COLLECTION_ID = import.meta.env.VITE_POEMS_COLLECTION_ID;
+export const CATEGORIES_COLLECTION_ID = import.meta.env
+  .VITE_CATEGORIES_COLLECTION_ID;
 
+export { databases, account };
 export default client;
