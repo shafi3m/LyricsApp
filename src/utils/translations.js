@@ -1,5 +1,6 @@
 export const translations = {
   en: {
+    not_provided: "Not provided",
     // Header
     home: "Home",
     categories: "Categories",
@@ -52,6 +53,7 @@ export const translations = {
       "© 2025 Rida-e-Bakhshish. Preserving spiritual poetry in English & Urdu, built with care and purpose.",
   },
   ur: {
+    not_provided: "مہیا نہیں کی گئی",
     // Header
     home: "ہوم",
     categories: "کیٹگری",

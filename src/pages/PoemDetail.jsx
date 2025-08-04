@@ -178,10 +178,9 @@ const PoemDetail = () => {
           <p className="text-sm text-gray-500 dark:text-gray-400 whitespace-pre-line">
             {getTranslation("description", globalLanguage)}:&nbsp;
             {(poemLanguage === "ur"
-              ? poem.description_ur || poem.description_en // prefer Urdu
+              ? poem.description_ur || poem.description_en
               : poem.description_en || poem.description_ur
-            ) // prefer English
-              ?.trim() || "Not provided"}
+            )?.trim() || getTranslation("not_provided", globalLanguage)}
           </p>
         </div>
       </div>
