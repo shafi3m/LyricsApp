@@ -115,7 +115,7 @@ const PoemForm = ({ categories, editingPoem, onEditComplete }) => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-gray-500 mb-2">
             English Title *
           </label>
           <input
@@ -130,7 +130,7 @@ const PoemForm = ({ categories, editingPoem, onEditComplete }) => {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-gray-500 mb-2">
             Urdu Title *
           </label>
           <input
@@ -147,7 +147,7 @@ const PoemForm = ({ categories, editingPoem, onEditComplete }) => {
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-gray-500 mb-2">
             Category *
           </label>
           <select
@@ -155,7 +155,11 @@ const PoemForm = ({ categories, editingPoem, onEditComplete }) => {
             value={formData.category}
             onChange={handleChange}
             required
-            className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+            className="w-full border border-gray-300 dark:border-gray-600
++            rounded-md px-3 py-2
++            bg-white dark:bg-gray-700
++            text-gray-900 dark:text-gray-100
++            focus:outline-none focus:ring-2 focus:ring-purple-500"
           >
             <option value="">Select Category</option>
             {categories.map((category) => (
@@ -167,7 +171,7 @@ const PoemForm = ({ categories, editingPoem, onEditComplete }) => {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-gray-500 mb-2">
             Language *
           </label>
           <select
@@ -175,7 +179,11 @@ const PoemForm = ({ categories, editingPoem, onEditComplete }) => {
             value={formData.language}
             onChange={handleChange}
             required
-            className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+            className="w-full border border-gray-300 dark:border-gray-600
++            rounded-md px-3 py-2
++            bg-white dark:bg-gray-700
++            text-gray-900 dark:text-gray-100
++            focus:outline-none focus:ring-2 focus:ring-purple-500"
           >
             <option value="en">English Only</option>
             <option value="ur">Urdu Only</option>
@@ -184,7 +192,7 @@ const PoemForm = ({ categories, editingPoem, onEditComplete }) => {
         </div>
 
         <div className="flex items-center">
-          <label className="flex items-center">
+          <label className="flex items-center text-gray-500">
             <input
               type="checkbox"
               name="featured"
@@ -198,7 +206,7 @@ const PoemForm = ({ categories, editingPoem, onEditComplete }) => {
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-2">
+        <label className="block text-sm font-medium text-gray-500 mb-2">
           English Content *
         </label>
         <textarea
@@ -213,7 +221,7 @@ const PoemForm = ({ categories, editingPoem, onEditComplete }) => {
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-2">
+        <label className="block text-sm font-medium text-gray-500 mb-2">
           Urdu Content *
         </label>
         <textarea

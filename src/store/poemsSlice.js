@@ -336,6 +336,47 @@ export const addPoem = createAsyncThunk("poems/addPoem", async (poemData) => {
   }
 });
 
+// ✏️ Update poem
+export const updatePoem = createAsyncThunk(
+  "poems/updatePoem",
+  async ({ poemId, data }, { rejectWithValue }) => {
+    try {
+      performanceMetrics.apiCalls++;
+
+      const response = await databases.updateDocument(
+        DATABASE_ID,
+        POEMS_COLLECTION_ID,
+        poemId,
+        data
+      );
+
+      console.log("✅ Poem updated:", response.$id);
+      return response;
+    } catch (err) {
+      console.error("❌ Error updating poem:", err);
+      return rejectWithValue(`Failed to update poem: ${err.message}`);
+    }
+  }
+);
+
+// 🗑️ Delete poem
+export const deletePoem = createAsyncThunk(
+  "poems/deletePoem",
+  async (poemId, { rejectWithValue }) => {
+    try {
+      performanceMetrics.apiCalls++;
+
+      await databases.deleteDocument(DATABASE_ID, POEMS_COLLECTION_ID, poemId);
+
+      console.log("🗑️ Poem deleted:", poemId);
+      return poemId; // reducer will remove from state
+    } catch (err) {
+      console.error("❌ Error deleting poem:", err);
+      return rejectWithValue(`Failed to delete poem: ${err.message}`);
+    }
+  }
+);
+
 // 🗃 Redux Slice
 const poemsSlice = createSlice({
   name: "poems",
@@ -540,6 +581,74 @@ const poemsSlice = createSlice({
         state.loading = false;
         state.error = action.error.message;
         console.error("❌ addPoem rejected:", action.error.message);
+      })
+
+      /* ────────────────────────────────────────────────
+   ✏️ updatePoem cases
+   ──────────────────────────────────────────────── */
+      .addCase(updatePoem.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(updatePoem.fulfilled, (state, action) => {
+        state.loading = false;
+
+        // Replace in allPoems
+        state.allPoems = state.allPoems.map((p) =>
+          p.$id === action.payload.$id ? action.payload : p
+        );
+
+        // Replace in currently-displayed poems
+        state.poems = state.poems.map((p) =>
+          p.$id === action.payload.$id ? action.payload : p
+        );
+
+        // Sync featuredPoems list
+        if (action.payload.featured) {
+          // ensure it’s there (prepend if absent)
+          if (!state.featuredPoems.find((p) => p.$id === action.payload.$id)) {
+            state.featuredPoems.unshift(action.payload);
+          } else {
+            state.featuredPoems = state.featuredPoems.map((p) =>
+              p.$id === action.payload.$id ? action.payload : p
+            );
+          }
+        } else {
+          // remove if it’s no longer featured
+          state.featuredPoems = state.featuredPoems.filter(
+            (p) => p.$id !== action.payload.$id
+          );
+        }
+
+        console.log("✏️ Poem updated in 30-minute cache:", action.payload.$id);
+      })
+      .addCase(updatePoem.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+        console.error("❌ updatePoem rejected:", action.error.message);
+      })
+
+      /* ────────────────────────────────────────────────
+   🗑 deletePoem cases
+   ──────────────────────────────────────────────── */
+      .addCase(deletePoem.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(deletePoem.fulfilled, (state, action) => {
+        state.loading = false;
+
+        // Remove from all arrays
+        state.allPoems = state.allPoems.filter((p) => p.$id !== action.payload);
+        state.poems = state.poems.filter((p) => p.$id !== action.payload);
+        state.featuredPoems = state.featuredPoems.filter(
+          (p) => p.$id !== action.payload
+        );
+
+        console.log("🗑️ Poem deleted from 30-minute cache:", action.payload);
+      })
+      .addCase(deletePoem.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+        console.error("❌ deletePoem rejected:", action.error.message);
       });
   },
 });
