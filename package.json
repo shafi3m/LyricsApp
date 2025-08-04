@@ -10,7 +10,7 @@
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0"
   },
   "dependencies": {
-    "@heroicons/react": "^2.2.0",
+    "@heroicons/react": "^2.0.0",
     "@reduxjs/toolkit": "^2.8.2",
     "@tailwindcss/vite": "^4.1.11",
     "appwrite": "^18.2.0",

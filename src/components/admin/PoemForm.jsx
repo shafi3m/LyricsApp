@@ -1,8 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { addPoem } from "../../store/poemsSlice";
+import {
+  databases,
+  DATABASE_ID,
+  POEMS_COLLECTION_ID,
+} from "../../services/appwrite";
 
-const PoemForm = ({ categories }) => {
+const PoemForm = ({ categories, editingPoem, onEditComplete }) => {
   const dispatch = useDispatch();
   const [formData, setFormData] = useState({
     title_en: "",
@@ -16,6 +21,31 @@ const PoemForm = ({ categories }) => {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState("");
+
+  // Populate form when editing
+  useEffect(() => {
+    if (editingPoem) {
+      setFormData({
+        title_en: editingPoem.title_en || "",
+        title_ur: editingPoem.title_ur || "",
+        content_en: editingPoem.content_en || "",
+        content_ur: editingPoem.content_ur || "",
+        category: editingPoem.category || "",
+        language: editingPoem.language || "both",
+        featured: editingPoem.featured || false,
+      });
+    } else {
+      setFormData({
+        title_en: "",
+        title_ur: "",
+        content_en: "",
+        content_ur: "",
+        category: "",
+        language: "both",
+        featured: false,
+      });
+    }
+  }, [editingPoem]);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -32,19 +62,38 @@ const PoemForm = ({ categories }) => {
     setSuccess(false);
 
     try {
-      await dispatch(addPoem(formData)).unwrap();
-      setSuccess(true);
-      setFormData({
-        title_en: "",
-        title_ur: "",
-        content_en: "",
-        content_ur: "",
-        category: "",
-        language: "both",
-        featured: false,
-      });
+      if (editingPoem) {
+        // Update existing poem
+        await databases.updateDocument(
+          DATABASE_ID,
+          POEMS_COLLECTION_ID,
+          editingPoem.$id,
+          formData
+        );
+        setSuccess(true);
+        if (onEditComplete) {
+          setTimeout(() => {
+            onEditComplete();
+          }, 1000);
+        }
+      } else {
+        // Add new poem
+        await dispatch(addPoem(formData)).unwrap();
+        setSuccess(true);
+        setFormData({
+          title_en: "",
+          title_ur: "",
+          content_en: "",
+          content_ur: "",
+          category: "",
+          language: "both",
+          featured: false,
+        });
+      }
     } catch (err) {
-      setError(err.message || "Failed to add poem");
+      setError(
+        err.message || `Failed to ${editingPoem ? "update" : "add"} poem`
+      );
     } finally {
       setLoading(false);
     }
@@ -54,7 +103,7 @@ const PoemForm = ({ categories }) => {
     <form onSubmit={handleSubmit} className="space-y-6">
       {success && (
         <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded">
-          Poem added successfully!
+          Poem {editingPoem ? "updated" : "added"} successfully!
         </div>
       )}
 
@@ -184,7 +233,9 @@ const PoemForm = ({ categories }) => {
           disabled={loading}
           className="w-full bg-purple-600 text-white py-2 px-4 rounded-md hover:bg-purple-700 focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 disabled:opacity-50"
         >
-          {loading ? "Adding Poem..." : "Add Poem"}
+          {loading
+            ? `${editingPoem ? "Updating" : "Adding"} Poem...`
+            : `${editingPoem ? "Update" : "Add"} Poem`}
         </button>
       </div>
     </form>

@@ -173,12 +173,13 @@ const PoemDetail = () => {
           </div>
         </div>
 
-        <div className="mt-8 pt-6 border-t border-gray-200 dark:border-gray-700">
+        {/* date */}
+        {/* <div className="mt-8 pt-6 border-t border-gray-200 dark:border-gray-700">
           <p className="text-sm text-gray-500 dark:text-gray-400">
             {getTranslation("published", globalLanguage)}:{" "}
             {new Date(poem.created_at).toLocaleDateString()}
           </p>
-        </div>
+        </div> */}
       </div>
     </div>
   );
