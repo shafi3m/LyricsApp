@@ -21,7 +21,7 @@ const AdminPanel = ({ user, onLogout }) => {
       {/* Header */}
       <div className="bg-white dark:bg-gray-800 shadow transition-colors duration-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-6">
+          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 py-4">
             <div className="flex items-center">
               <BookOpenIcon className="h-8 w-8 text-purple-600 dark:text-purple-400 mr-3" />
               <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
@@ -46,7 +46,7 @@ const AdminPanel = ({ user, onLogout }) => {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
           <div className="bg-white dark:bg-gray-800 overflow-hidden shadow rounded-lg transition-colors duration-200">
             <div className="p-5">
               <div className="flex items-center">
