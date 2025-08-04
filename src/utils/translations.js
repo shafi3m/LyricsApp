@@ -1,6 +1,11 @@
 export const translations = {
   en: {
     not_provided: "Not provided",
+    feedback: "Feedback",
+    name: "Name",
+    email: "Email",
+    message: "Meassage",
+    submit: "Submit",
     // Header
     home: "Home",
     categories: "Categories",
@@ -54,6 +59,12 @@ export const translations = {
   },
   ur: {
     not_provided: "مہیا نہیں کی گئی",
+    feedback: "رائے",
+    name: "نام",
+    email: "ای میل",
+    message: "پیغام",
+    submit: "جمع کریں",
+
     // Header
     home: "ہوم",
     categories: "کیٹگری",

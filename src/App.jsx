@@ -14,6 +14,7 @@ import Home from "./pages/Home";
 import Categories from "./pages/Categories";
 import PoemDetail from "./pages/PoemDetail";
 import About from "./pages/About";
+import FeedbackForm from "./pages/FeedbackForm";
 import Admin from "./pages/Admin";
 
 // Component to handle smooth scroll on route changes
@@ -40,6 +41,7 @@ function App() {
                 <Route path="/categories" element={<Categories />} />
                 <Route path="/poem/:id" element={<PoemDetail />} />
                 <Route path="/about" element={<About />} />
+                <Route path="/feedback" element={<FeedbackForm />} />
                 <Route path="/admin" element={<Admin />} />
               </Routes>
             </main>

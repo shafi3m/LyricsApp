@@ -53,6 +53,10 @@ const Header = () => {
             <Link to="/about" className={navLinkClass("/about")}>
               {getTranslation("about", language)}
             </Link>
+            <Link to="/feedback" className={navLinkClass("/feedback")}>
+              {" "}
+              {getTranslation("feedback", language)}
+            </Link>
           </nav>
 
           {/* Theme and Language Controls */}
@@ -120,6 +124,13 @@ const Header = () => {
                 onClick={() => setIsMenuOpen(false)}
               >
                 {getTranslation("about", language)}
+              </Link>
+              <Link
+                to="/feedback"
+                className={`block ${navLinkClass("/feedback")}`}
+                onClick={() => setIsMenuOpen(false)}
+              >
+                {getTranslation("feedback", language)}
               </Link>
 
               {/* Mobile Theme and Language Controls */}
