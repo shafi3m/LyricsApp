@@ -25,7 +25,7 @@ export const translations = {
 
     // Poem detail
     goBack: "Go back",
-    published: "Published",
+    description: "Description",
 
     // General
     english: "English",
@@ -76,7 +76,7 @@ export const translations = {
 
     // Poem detail
     goBack: " واپس جائیں",
-    published: "شائع شدہ",
+    description: "شائع شدہ",
 
     // General
     english: "English",

@@ -173,13 +173,17 @@ const PoemDetail = () => {
           </div>
         </div>
 
-        {/* date */}
-        {/* <div className="mt-8 pt-6 border-t border-gray-200 dark:border-gray-700">
-          <p className="text-sm text-gray-500 dark:text-gray-400">
-            {getTranslation("published", globalLanguage)}:{" "}
-            {new Date(poem.created_at).toLocaleDateString()}
+        {/* description */}
+        <div className="mt-8 pt-6 border-t border-gray-200 dark:border-gray-700">
+          <p className="text-sm text-gray-500 dark:text-gray-400 whitespace-pre-line">
+            {getTranslation("description", globalLanguage)}:&nbsp;
+            {(poemLanguage === "ur"
+              ? poem.description_ur || poem.description_en // prefer Urdu
+              : poem.description_en || poem.description_ur
+            ) // prefer English
+              ?.trim() || "Not provided"}
           </p>
-        </div> */}
+        </div>
       </div>
     </div>
   );
