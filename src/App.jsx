@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -16,23 +16,30 @@ import PoemDetail from "./pages/PoemDetail";
 import About from "./pages/About";
 import FeedbackForm from "./pages/FeedbackForm";
 import Admin from "./pages/Admin";
+import { initGA, logPageView } from "./analytics"; // ⬅️ Import GA functions
 
-// Component to handle smooth scroll on route changes
-const ScrollToTop = () => {
-  const { pathname } = useLocation();
+// Component to handle scroll & GA tracking on route change
+const ScrollAndTrack = () => {
+  const location = useLocation();
 
-  React.useEffect(() => {
+  useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
-  }, [pathname]);
+    logPageView(location.pathname + location.search); // 📊 Track page view
+  }, [location]);
 
   return null;
 };
 
 function App() {
+  useEffect(() => {
+    initGA(); // ✅ Initialize GA once on mount
+  }, []);
+
   return (
     <Provider store={store}>
       <ThemeProvider>
         <Router>
+          <ScrollAndTrack /> {/* 📌 Added for GA + scroll */}
           <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 transition-colors duration-200">
             <Header />
             <main className="container mx-auto px-4 py-8">
